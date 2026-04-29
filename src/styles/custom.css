@@ -1,159 +1,123 @@
-/* CTFLab Starlight Theme Customization */
+/* CTFLab Starlight Theme — primary #98dd24 */
 
-:root {
-	--sl-color-accent-low: hsl(280 40% 20%);
-	--sl-color-accent: hsl(280 50% 50%);
-	--sl-color-accent-high: hsl(280 80% 80%);
-	--sl-color-white: #0f0f0f;
-	--sl-color-gray-1: #1a1a1a;
-	--sl-color-gray-2: #2d2d2d;
-	--sl-color-gray-3: #3d3d3d;
-	--sl-color-gray-4: #4a4a4a;
-	--sl-color-gray-5: #5a5a5a;
-	--sl-color-gray-6: #7a7a7a;
-	--sl-color-gray-7: #9a9a9a;
-	--sl-color-black: #ffffff;
+/* ─── Accent tokens ─────────────────────────────────────────────────────────
+   Starlight uses three accent levels:
+     accent-low  → subtle background tints
+     accent      → primary interactive colour (links, active states)
+     accent-high → high-contrast foreground on accent backgrounds
+   Dark and light need separate values because luminosity roles flip.
+────────────────────────────────────────────────────────────────────────────── */
+
+:root[data-theme="dark"] {
+	--sl-color-accent-low:  hsl(82 74% 14%);   /* deep tint for bg */
+	--sl-color-accent:      hsl(82 74% 51%);   /* #98dd24           */
+	--sl-color-accent-high: hsl(82 74% 78%);   /* light for text on dark bg */
 }
 
-/* Light mode overrides (if anyone uses it) */
-@media (prefers-color-scheme: light) {
-	:root {
-		--sl-color-white: #ffffff;
-		--sl-color-gray-1: #f5f5f5;
-		--sl-color-gray-2: #ebebeb;
-	}
+:root[data-theme="light"] {
+	--sl-color-accent-low:  hsl(82 74% 88%);   /* pale tint for bg  */
+	--sl-color-accent:      hsl(82 74% 32%);   /* darker for contrast on white */
+	--sl-color-accent-high: hsl(82 74% 18%);   /* deepest for text on light bg */
 }
 
-/* Hero section styling */
-.hero {
-	background: linear-gradient(135deg, hsl(280 50% 20%) 0%, hsl(280 50% 10%) 100%);
+/* ─── Card styling ──────────────────────────────────────────────────────────── */
+
+:root[data-theme="dark"] .sl-card {
+	background:   hsl(82 10% 12%);
+	border-color: hsl(82 40% 28%);
 	border-radius: 8px;
-	padding: 3rem;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Card styling */
-[data-card] {
-	border-color: hsl(280 50% 40%);
-	background: hsl(280 20% 15%);
+:root[data-theme="dark"] .sl-card:hover {
+	border-color: hsl(82 74% 51%);
+	box-shadow:   0 4px 14px hsl(82 74% 51% / 0.15);
+}
+
+:root[data-theme="light"] .sl-card {
+	background:   hsl(82 20% 97%);
+	border-color: hsl(82 40% 72%);
 	border-radius: 8px;
-	transition: all 0.3s ease;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-[data-card]:hover {
-	border-color: hsl(280 60% 50%);
-	background: hsl(280 25% 20%);
-	box-shadow: 0 4px 12px hsl(280 40% 20% / 0.3);
+:root[data-theme="light"] .sl-card:hover {
+	border-color: hsl(82 74% 32%);
+	box-shadow:   0 4px 14px hsl(82 74% 32% / 0.12);
 }
 
-/* Link styling */
-a {
-	color: hsl(280 80% 60%);
-	text-decoration: none;
-	transition: color 0.2s ease;
-}
+/* ─── Inline code ───────────────────────────────────────────────────────────── */
 
-a:hover {
-	color: hsl(280 100% 70%);
-	text-decoration: underline;
-}
-
-/* Code block styling */
-code {
-	background: hsl(280 15% 20%);
-	border: 1px solid hsl(280 40% 40%);
+:root[data-theme="dark"] :not(pre) > code {
+	background:   hsl(82 15% 16%);
+	border:       1px solid hsl(82 30% 30%);
 	border-radius: 4px;
-	padding: 0.2em 0.4em;
-	font-size: 0.9em;
+	padding:      0.15em 0.4em;
 }
 
-pre {
-	background: hsl(280 15% 18%) !important;
-	border: 1px solid hsl(280 40% 40%);
+:root[data-theme="light"] :not(pre) > code {
+	background:   hsl(82 25% 93%);
+	border:       1px solid hsl(82 30% 68%);
+	border-radius: 4px;
+	padding:      0.15em 0.4em;
+}
+
+/* ─── Code blocks ───────────────────────────────────────────────────────────── */
+
+:root[data-theme="dark"] pre {
+	background:   hsl(82 10% 11%) !important;
+	border:       1px solid hsl(82 30% 28%);
+	border-radius: 6px;
+}
+
+:root[data-theme="light"] pre {
+	background:   hsl(82 15% 96%) !important;
+	border:       1px solid hsl(82 30% 70%);
 	border-radius: 6px;
 }
 
 pre code {
 	background: transparent;
-	border: none;
-	padding: 0;
+	border:     none;
+	padding:    0;
 }
 
-/* Callout/aside styling */
-aside {
-	background: hsl(280 25% 22%);
-	border-left: 4px solid hsl(280 70% 50%);
-	border-radius: 4px;
-	padding: 1rem;
-	margin: 1rem 0;
+/* ─── Aside / callout ───────────────────────────────────────────────────────── */
+
+:root[data-theme="dark"] .starlight-aside {
+	background:   hsl(82 10% 14%);
+	border-left:  3px solid hsl(82 74% 51%);
 }
 
-/* Button styling */
-button, a.button, [role="button"] {
-	background: hsl(280 70% 50%);
-	color: white;
-	border: none;
-	padding: 0.5rem 1rem;
-	border-radius: 4px;
-	cursor: pointer;
-	transition: all 0.2s ease;
-	font-weight: 600;
+:root[data-theme="light"] .starlight-aside {
+	background:   hsl(82 30% 95%);
+	border-left:  3px solid hsl(82 74% 32%);
 }
 
-button:hover, a.button:hover {
-	background: hsl(280 80% 55%);
-	box-shadow: 0 2px 8px hsl(280 70% 50% / 0.3);
+/* ─── Tables ────────────────────────────────────────────────────────────────── */
+
+:root[data-theme="dark"] thead {
+	background: hsl(82 10% 18%);
 }
 
-button:active, a.button:active {
-	background: hsl(280 70% 45%);
+:root[data-theme="dark"] th,
+:root[data-theme="dark"] td {
+	border-color: hsl(82 20% 28%);
 }
 
-/* Table styling */
-table {
-	border-collapse: collapse;
-	width: 100%;
-	margin: 1rem 0;
+:root[data-theme="dark"] tbody tr:hover {
+	background: hsl(82 10% 20%);
 }
 
-thead {
-	background: hsl(280 25% 25%);
+:root[data-theme="light"] thead {
+	background: hsl(82 20% 90%);
 }
 
-th, td {
-	border: 1px solid hsl(280 40% 40%);
-	padding: 0.75rem;
-	text-align: left;
+:root[data-theme="light"] th,
+:root[data-theme="light"] td {
+	border-color: hsl(82 20% 72%);
 }
 
-tbody tr:hover {
-	background: hsl(280 15% 22%);
-}
-
-/* Sidebar nav styling */
-[data-sidebar-nav] a {
-	color: hsl(280 80% 65%);
-}
-
-[data-sidebar-nav] a:hover,
-[data-sidebar-nav] a[aria-current="page"] {
-	color: hsl(280 100% 70%);
-	background: hsl(280 30% 25%);
-}
-
-/* Search styling */
-input[type="search"] {
-	background: hsl(280 15% 20%);
-	border: 1px solid hsl(280 40% 40%);
-	color: hsl(280 100% 80%);
-	border-radius: 4px;
-	padding: 0.5rem;
-}
-
-input[type="search"]::placeholder {
-	color: hsl(280 40% 60%);
-}
-
-/* Smooth transitions throughout */
-* {
-	transition: background-color 0.2s ease, border-color 0.2s ease;
+:root[data-theme="light"] tbody tr:hover {
+	background: hsl(82 20% 95%);
 }
