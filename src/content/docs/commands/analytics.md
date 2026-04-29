@@ -1,0 +1,179 @@
+---
+title: Analytics
+description: View CTF activity and performance metrics
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Track guild-wide CTF activity and individual player performance with real-time analytics dashboards.
+
+## `/ctf-analytics`
+
+View a comprehensive guild-wide analytics dashboard.
+
+**Usage:** `/ctf-analytics`
+
+**Permission:** `Manage Server` (admin only)
+
+**What it shows (3 tabs):**
+
+### Tab 1: Overview
+High-level activity metrics:
+- **Total CTFs** — challenges created in your guild
+- **Open CTFs** — active (non-archived) challenges
+- **Total Solves** — challenges solved across all members
+- **Total Attempts** — sum of all attempts (failed + successful)
+- **Unique Solvers** — number of members who've solved at least one CTF
+- **Avg Attempts per CTF** — average attempts per challenge
+- **Avg Attempts per Solve** — average attempts before success (accuracy indicator)
+
+**Example:**
+```
+Total CTFs: 42
+Open CTFs: 38
+Total Solves: 156
+Total Attempts: 287
+Unique Solvers: 24
+Avg Attempts per CTF: 6.8
+Avg Attempts per Solve: 1.8 (high quality challenges!)
+```
+
+---
+
+### Tab 2: Hardest CTFs
+Ranks the top 5 most difficult challenges:
+- **Challenge Title** — with difficulty badge
+- **Total Attempted** — how many members tried it
+- **Total Solved** — how many members succeeded
+- **Avg Attempts** — average attempts before solving
+- **Solve Rate** — percentage of attempts that succeeded
+
+**Use case:** Find challenges to adjust or identify knowledge gaps in your guild.
+
+**Example:**
+```
+🥇 RSA Factorization (Hard) — 12 attempted, 3 solved, 8.4 avg attempts, 25% solve rate
+🥈 Assembly Reversing (Insane) — 8 attempted, 1 solved, 15.2 avg attempts, 12.5% solve rate
+```
+
+---
+
+### Tab 3: Top Solvers
+Leaderboard of most active members:
+- **Rank & User** — 🥇🥈🥉 medals for top 3
+- **Solves** — total challenges solved
+- **Points** — (if points mode enabled)
+- **Total Attempts** — attempts across all CTFs
+
+**Example (points mode):**
+```
+🥇 @Alice — 1850 pts (12 solved, 28 attempts)
+🥈 @Bob — 1600 pts (10 solved, 22 attempts)
+🥉 @Charlie — 1050 pts (8 solved, 31 attempts)
+```
+
+---
+
+## `/ctf-stats [member]`
+
+View detailed performance stats for any player.
+
+**Usage:** `/ctf-stats` (yourself) or `/ctf-stats @username` (another member)
+
+**Permission:** Public (all members can view anyone's stats)
+
+**What it shows:**
+- **User Avatar** — member's profile picture
+- **Solves** — total challenges solved
+- **Attempts** — total attempts across all challenges
+- **Accuracy** — percentage of attempts that succeeded
+- **First Bloods** — challenges this user solved first
+- **Points** — (if points mode enabled)
+- **Difficulty Breakdown** — solves by difficulty level (Easy: 5, Hard: 3, etc.)
+- **First Solve** — timestamp of first challenge solved
+- **Last Solve** — timestamp of most recent solve
+
+**Example Output:**
+```
+@Alice's CTF Stats
+
+Solves: 12 / 15 attempted
+Attempts: 28 total
+Accuracy: 82.1%
+First Bloods: 3
+Points: 1850 pts
+
+Difficulty Breakdown:
+  Easy: 5 (500 pts)
+  Medium: 4 (750 pts)
+  Hard: 3 (600 pts)
+
+First Solve: 2026-03-15 14:32 UTC
+Last Solve: 2026-04-28 09:15 UTC
+```
+
+---
+
+## Real-Time Updates
+
+Both dashboards update instantly as members solve challenges:
+- New solves appear on leaderboards immediately
+- Hardest CTFs rankings recalculate dynamically
+- Player stats refresh in real-time
+
+---
+
+## Banned Users
+
+<Aside type="tip">
+Banned members are excluded from all analytics calculations.
+</Aside>
+
+If you ban a member with `/ctf-ban`, they automatically:
+- Disappear from leaderboards
+- Don't count toward "Unique Solvers" metrics
+- Are excluded from "Top Solvers" rankings
+- Unbanning restores them with full history intact
+
+---
+
+## Tips & Use Cases
+
+### For Guild Admins
+
+**Use Case 1: Balance Difficulty**
+- Check "Hardest CTFs" tab
+- If a challenge has <20% solve rate and 10+ attempts, consider it too hard
+- Publish a hint or adjust for next iteration
+
+**Use Case 2: Celebrate Milestones**
+- View "Top Solvers" tab monthly
+- Announce top performers in `#announcements`
+- Award special roles or react with celebrations
+
+**Use Case 3: Engagement Metrics**
+- Use "Overview" to track monthly growth
+- Compare unique solvers month-over-month
+- Gauge whether challenges are getting easier (higher solve rates) or harder
+
+### For Members
+
+**Use Case 1: Track Progress**
+- Run `/ctf-stats` to see your improvement over time
+- Watch accuracy increase as you get better
+
+**Use Case 2: Find Weak Areas**
+- Check difficulty breakdown in your stats
+- Focus on difficulty levels where you have few solves
+
+**Use Case 3: Compare Performance**
+- Check `/ctf-stats @friend` to see how you compare (friendly competition!)
+- Aim to beat their first-blood count
+
+---
+
+## Next Steps
+
+- **[Admin Setup Guide](/ctflab-docs/admin/configuration/)** — Best practices
+- **[Leaderboard Commands](/ctflab-docs/commands/leaderboard/)** — Scoring configuration
+- **[Features: Analytics](/ctflab-docs/features/analytics/)** — In-depth feature guide

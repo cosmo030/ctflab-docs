@@ -1,0 +1,67 @@
+---
+title: Installation
+description: How to install and configure CTFLab in your server
+---
+
+import { Steps, Card, CardGrid } from '@astrojs/starlight/components';
+
+## Installation (3 Steps)
+
+<Steps>
+
+1. **Add CTFLab to Your Server**
+   
+   Click the button below to invite CTFLab with the required permissions:
+   
+   **[Add to Server](https://discord.com/oauth2/authorize?client_id=YOUR_BOT_ID&scope=bot+applications.commands&permissions=permissions_number)**
+   
+   CTFLab requires these permissions:
+   - `Manage Channels` — Create event workspaces
+   - `Manage Roles` — Manage solver roles and top-3 roles
+   - `Send Messages` — Post embeds and announcements
+   - `Embed Links` — Send rich embed messages
+   - `Add Reactions` — Interactive buttons and UI
+
+2. **Wait for Bot to Come Online**
+   
+   CTFLab will initialize the database and register slash commands. This typically takes 5-10 seconds.
+
+3. **Run Your First Command**
+   
+   Try `/ctf-list` in any channel. You should see the command autocomplete. If yes, you're ready! 🎉
+
+</Steps>
+
+## Optional: Configure Admin Logging
+
+To enable comprehensive audit logging:
+
+1. Choose a private admin channel or create a new one (e.g., `#ctf-audit`)
+2. Run `/admin-logs #ctf-audit`
+3. A persistent configuration embed will be posted and updated whenever admins create/edit/delete CTFs
+
+This is highly recommended for transparency, but completely optional.
+
+## Optional: Set a Success Channel
+
+When members solve CTFs, you can have announcements posted to a specific channel:
+
+1. Choose a channel (e.g., `#ctf-wins` or `#announcements`)
+2. Run `/ctf-success-channel #ctf-wins`
+3. From now on, solved CTFs will be announced there with a celebration message
+
+## Optional: Enable Points Mode
+
+By default, CTFLab ranks solvers by **solve count**. To enable **points-based scoring**:
+
+1. Run `/ctf-config-points`
+2. Enter point values for each difficulty level (e.g., Easy=100, Hard=400)
+3. Create a leaderboard with `/ctf-leaderboard` — it will now show points instead of solve count
+
+## Ready to Go!
+
+Your server is now ready for CTF challenges. Next steps:
+
+- **[Create your first challenge](/ctflab-docs/features/ctf-builder/)** using `/create-ctf`
+- **[Set up a leaderboard](/ctflab-docs/commands/leaderboard/)** with `/ctf-leaderboard`
+- **[Learn about events](/ctflab-docs/features/events/)** for competitive tournaments

@@ -1,0 +1,159 @@
+/* CTFLab Starlight Theme Customization */
+
+:root {
+	--sl-color-accent-low: hsl(280 40% 20%);
+	--sl-color-accent: hsl(280 50% 50%);
+	--sl-color-accent-high: hsl(280 80% 80%);
+	--sl-color-white: #0f0f0f;
+	--sl-color-gray-1: #1a1a1a;
+	--sl-color-gray-2: #2d2d2d;
+	--sl-color-gray-3: #3d3d3d;
+	--sl-color-gray-4: #4a4a4a;
+	--sl-color-gray-5: #5a5a5a;
+	--sl-color-gray-6: #7a7a7a;
+	--sl-color-gray-7: #9a9a9a;
+	--sl-color-black: #ffffff;
+}
+
+/* Light mode overrides (if anyone uses it) */
+@media (prefers-color-scheme: light) {
+	:root {
+		--sl-color-white: #ffffff;
+		--sl-color-gray-1: #f5f5f5;
+		--sl-color-gray-2: #ebebeb;
+	}
+}
+
+/* Hero section styling */
+.hero {
+	background: linear-gradient(135deg, hsl(280 50% 20%) 0%, hsl(280 50% 10%) 100%);
+	border-radius: 8px;
+	padding: 3rem;
+}
+
+/* Card styling */
+[data-card] {
+	border-color: hsl(280 50% 40%);
+	background: hsl(280 20% 15%);
+	border-radius: 8px;
+	transition: all 0.3s ease;
+}
+
+[data-card]:hover {
+	border-color: hsl(280 60% 50%);
+	background: hsl(280 25% 20%);
+	box-shadow: 0 4px 12px hsl(280 40% 20% / 0.3);
+}
+
+/* Link styling */
+a {
+	color: hsl(280 80% 60%);
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+a:hover {
+	color: hsl(280 100% 70%);
+	text-decoration: underline;
+}
+
+/* Code block styling */
+code {
+	background: hsl(280 15% 20%);
+	border: 1px solid hsl(280 40% 40%);
+	border-radius: 4px;
+	padding: 0.2em 0.4em;
+	font-size: 0.9em;
+}
+
+pre {
+	background: hsl(280 15% 18%) !important;
+	border: 1px solid hsl(280 40% 40%);
+	border-radius: 6px;
+}
+
+pre code {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+/* Callout/aside styling */
+aside {
+	background: hsl(280 25% 22%);
+	border-left: 4px solid hsl(280 70% 50%);
+	border-radius: 4px;
+	padding: 1rem;
+	margin: 1rem 0;
+}
+
+/* Button styling */
+button, a.button, [role="button"] {
+	background: hsl(280 70% 50%);
+	color: white;
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-weight: 600;
+}
+
+button:hover, a.button:hover {
+	background: hsl(280 80% 55%);
+	box-shadow: 0 2px 8px hsl(280 70% 50% / 0.3);
+}
+
+button:active, a.button:active {
+	background: hsl(280 70% 45%);
+}
+
+/* Table styling */
+table {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 1rem 0;
+}
+
+thead {
+	background: hsl(280 25% 25%);
+}
+
+th, td {
+	border: 1px solid hsl(280 40% 40%);
+	padding: 0.75rem;
+	text-align: left;
+}
+
+tbody tr:hover {
+	background: hsl(280 15% 22%);
+}
+
+/* Sidebar nav styling */
+[data-sidebar-nav] a {
+	color: hsl(280 80% 65%);
+}
+
+[data-sidebar-nav] a:hover,
+[data-sidebar-nav] a[aria-current="page"] {
+	color: hsl(280 100% 70%);
+	background: hsl(280 30% 25%);
+}
+
+/* Search styling */
+input[type="search"] {
+	background: hsl(280 15% 20%);
+	border: 1px solid hsl(280 40% 40%);
+	color: hsl(280 100% 80%);
+	border-radius: 4px;
+	padding: 0.5rem;
+}
+
+input[type="search"]::placeholder {
+	color: hsl(280 40% 60%);
+}
+
+/* Smooth transitions throughout */
+* {
+	transition: background-color 0.2s ease, border-color 0.2s ease;
+}

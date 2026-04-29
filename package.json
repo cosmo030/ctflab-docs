@@ -1,0 +1,19 @@
+{
+  "name": "ctflab-docs",
+  "version": "1.0.0",
+  "description": "Official documentation for CTFLab Discord bot",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "keywords": ["ctf", "discord", "bot", "capture-the-flag"],
+  "author": "cosmo030",
+  "license": "MIT",
+  "dependencies": {
+    "astro": "latest",
+    "@astrojs/starlight": "latest"
+  }
+}

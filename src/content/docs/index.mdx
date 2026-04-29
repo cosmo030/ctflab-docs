@@ -1,0 +1,51 @@
+---
+title: CTFLab
+description: CTF Competitions, But In Discord
+template: splash
+hero:
+  tagline: Run competitive CTF challenges directly in your Discord server
+  image:
+    file: ../../assets/hero.svg
+  actions:
+    - text: Add to Server
+      link: https://discord.com/oauth2/authorize?client_id=YOUR_BOT_ID&scope=bot+applications.commands&permissions=permissions_number
+      icon: external
+    - text: View Commands
+      link: /ctflab-docs/commands/
+      icon: right-arrow
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Why CTFLab?
+
+**Bring CTF competitions to life in Discord** — no external platforms needed. Create challenges, submit flags, track scores, and celebrate wins all in one place.
+
+<CardGrid stagger>
+	<Card title="Interactive Builder" icon="pencil">
+		Create CTF challenges with an intuitive multi-step builder. Support text and file-based challenges effortlessly.
+	</Card>
+	<Card title="Real-Time Leaderboards" icon="star">
+		Automatic leaderboard updates with support for solve-count or points-based scoring modes.
+	</Card>
+	<Card title="Analytics Dashboard" icon="bars">
+		Deep insights into challenge difficulty, player performance, and guild-wide CTF activity.
+	</Card>
+	<Card title="First Blood Bonuses" icon="rocket">
+		Reward your fastest solvers with automatic point boosts for 1st, 2nd, and 3rd place.
+	</Card>
+	<Card title="Event Workspaces" icon="setting">
+		Create fully-managed CTF event spaces with dedicated channels, roles, and scoreboards.
+	</Card>
+	<Card title="Sandbox Testing" icon="shield">
+		Private isolated environments for testing challenges before releasing to the guild.
+	</Card>
+</CardGrid>
+
+## Quick Links
+
+- **[Getting Started](/ctflab-docs/getting-started/introduction/)** — Set up CTFLab in your server
+- **[Commands Reference](/ctflab-docs/commands/)** — Complete slash command guide
+- **[Feature Guides](/ctflab-docs/features/ctf-builder/)** — Deep-dive into each feature
+- **[Support Server](https://discord.gg/YOUR_SUPPORT_SERVER)** — Get help from the community
+- **[Top.gg Listing](https://top.gg/bot/YOUR_BOT_ID)** — Vote for CTFLab

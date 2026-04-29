@@ -1,0 +1,71 @@
+---
+title: Introduction
+description: What is CTFLab and what can you do with it?
+---
+
+CTFLab is a Discord bot that brings **Capture The Flag competitions** to your server. It's a lightweight, self-contained platform where admins and creators can host CTF challenges, and members can solve them in real-time with instant feedback and automatic leaderboard updates.
+
+## What Can You Do?
+
+### For Members
+- **Create and solve CTF challenges** using simple slash commands
+- **Submit flags** with instant validation and live feedback
+- **View your progress** against other members on the leaderboard
+- **Earn badges and roles** for solving challenges
+- **Compete for first blood** bonuses on newly released CTFs
+
+### For Admins
+- **Set up the bot** with minimal configuration
+- **Create managed event workspaces** with dedicated channels and roles
+- **Configure leaderboard modes** (solve-count or points-based)
+- **Enable first-blood bonuses** to reward the fastest solvers
+- **Monitor CTF activity** with the analytics dashboard
+- **Audit all actions** with built-in admin logging
+
+### For Creators
+- **Build CTF challenges** with an interactive builder (no command syntax needed)
+- **Support text or file-based challenges** (attachments, encrypted strings, etc.)
+- **Edit challenges on the fly** without losing progress data
+- **Test in a sandbox** before releasing to the guild
+- **Track solve statistics** for difficulty balancing
+
+## Core Features
+
+### 🏗️ **CTF Builder**
+Multi-step interactive wizard for creating challenges. Set difficulty, category, instructions, and flag validation without wrestling with markdown or JSON.
+
+### 📊 **Leaderboard System**
+Automatic, real-time leaderboards with two scoring modes:
+- **Solve-count mode** — rank by number of CTFs solved
+- **Points mode** — assign points per difficulty level, award first-blood bonuses
+
+### 🎯 **Analytics Dashboard**
+Guild-wide insights: hardest CTFs, most active solvers, player accuracy, and detailed per-player stats.
+
+### 🚀 **First Blood Bonuses**
+Configure automatic point multipliers for the first three solvers of each challenge. Perfect for competitive events.
+
+### 📅 **Event Workspaces**
+Fully-managed CTF events with auto-created categories, channels, roles, and dedicated leaderboards.
+
+### 🧪 **Sandbox Testing**
+Private, isolated channels where you can create and test challenges before releasing them to the guild.
+
+## Getting Started
+
+### Step 1: Add the Bot
+Click the **Add to Server** button on the home page to invite CTFLab to your Discord server.
+
+### Step 2: Configure (Admin Only)
+Run `/admin-logs` to set up audit logging (optional but recommended). That's it! You're ready to go.
+
+### Step 3: Create Your First CTF
+Use `/create-ctf` to launch the interactive builder. Follow the prompts to set your challenge details, and publish.
+
+### Step 4: Post a Leaderboard
+Run `/ctf-leaderboard` to post the guild-wide leaderboard to a channel of your choice.
+
+## Next Steps
+- Explore the **[Commands Reference](/ctflab-docs/commands/)** to learn every command
+- Read **[Feature Guides](/ctflab-docs/features/)** for detailed walkthroughs
+- Check **[Admin Setup](/ctflab-docs/admin/)** for advanced configuration
