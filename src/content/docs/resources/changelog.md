@@ -1,0 +1,189 @@
+---
+title: Changelog
+description: Version history and feature updates
+---
+
+import { Card } from '@astrojs/starlight/components';
+
+## CTFLab v1.0.0 — Public Release
+
+**Release Date:** 2026-04-29  
+**Status:** Production-Ready
+
+Welcome to CTFLab v1.0.0, the complete Discord-native CTF platform. This is the first public release with all core features fully implemented and tested.
+
+---
+
+## ✨ Major Features
+
+### Core CTF Management
+- **Interactive CTF Builder** — Multi-step wizard for creating challenges
+- **Flag Submission System** — Real-time flag validation with attempt tracking
+- **Challenge Editing** — Modify difficulty, guidance, flags, and max attempts
+- **Challenge Deletion & Archiving** — Remove or close challenges cleanly
+- **Repair System** — Re-post broken challenge embeds without data loss
+
+### Leaderboards & Scoring
+- **Dual Scoring Modes:**
+  - Solve-count leaderboard (default)
+  - Points-based leaderboard with custom difficulty values
+- **Dual Display Formats:**
+  - Desktop leaderboard (3-column grid)
+  - Mobile leaderboard (single-column optimized)
+- **Real-time Updates** — Leaderboards refresh automatically on each solve
+- **Debouncing** — Multiple solves grouped into single refresh (5s delay)
+- **Leaderboard Management** — Remove users, revoke specific solves, manual awards
+
+### Advanced Scoring
+- **First-Blood Bonuses** — Configurable point multipliers for 1st/2nd/3rd solvers
+- **Per-Challenge Solver Roles** — Auto-assign roles to successful solvers
+- **Top 3 Auto-Roles** — Automatic rank roles with custom names and colors
+- **Point Customization** — Configure points per difficulty level
+- **Difficulty Customization** — Create guild-specific difficulty labels
+
+### Community Features
+- **Guild Leaderboards** — Per-guild isolation and independent configurations
+- **Event Workspaces** — Create time-limited tournament spaces with dedicated channels
+- **Event Leaderboards** — Separate scoring for tournament challenges
+- **Event Presets** — Team CTF, Educational, or Minimal channel templates
+- **Event Role Management** — Automatic role assignment and removal
+
+### Testing & Sandbox
+- **Sandbox Environment** — Private testing channels with 2-hour auto-delete
+- **Sandbox CTF Builder** — Create test challenges isolated from leaderboards
+- **Sandbox Panel** — Control sandbox lifecycle with UI buttons
+
+### Analytics & Insights
+- **Guild Analytics Dashboard** — Overview tab, hardest CTFs, top solvers
+- **Player Statistics** — Per-member stats with accuracy and breakdown by difficulty
+- **Difficulty Metrics** — Identify too-easy or too-hard challenges
+- **Activity Trends** — Monitor unique solvers and engagement
+
+### Administrative Tools
+- **Admin Audit Logging** — Color-coded action tracking with pagination
+- **Success Channel** — Configurable solve announcements
+- **Answer Logs** — Optional flag submission tracking
+- **Creator Role** — Grant non-admin CTF creation permissions
+- **Creator Self-Solve Toggle** — Control whether creators can solve own challenges
+
+### Configuration
+- **Multi-Guild Support** — Each guild has independent configuration
+- **Difficulty Configuration** — Custom difficulty labels per guild
+- **Points Configuration** — Custom point values per difficulty
+- **Channel Management** — Designate success, audit, and logging channels
+
+---
+
+## 🐛 Quality & Stability
+
+- **26 comprehensive DB-layer tests** — pytest + asyncio coverage
+- **Async/await throughout** — Full asynchronous I/O stack
+- **Parameterized SQL** — No SQL injection vulnerabilities
+- **WAL Mode Database** — SQLite with write-ahead logging for reliability
+- **Persistent Views** — Buttons survive bot restarts via custom_id
+- **Error Handling** — Graceful fallbacks and user-friendly error messages
+- **Rate Limiting** — Built-in Discord API rate limit handling
+
+---
+
+## 🔄 Integrations
+
+- **Notion Roadmap Sync** — Pulls feature roadmap every 5 minutes
+- **Top.gg Stats Reporting** — Automatic bot stats submission
+- **Discord OAuth2** — Secure bot authorization flow
+
+---
+
+## 📋 Known Limitations
+
+- **Flag Submission Limit** — Each CTF can have 0 (unlimited) to N max attempts
+- **Sandbox TTL** — Fixed 2-hour lifetime (no custom TTL)
+- **Single Leaderboard Mode** — Guild-wide solve-count or points (can't mix)
+- **No Web Dashboard** — All interaction through Discord (intentional design)
+- **No Challenge Templates** — Each CTF created from scratch
+
+---
+
+## 🗺️ Future Roadmap
+
+### High Priority (Upcoming)
+- [ ] `/ctf-solves` command — View all members who solved a challenge
+- [ ] `/ctf-my-progress` — Personal challenge progress dashboard
+- [ ] Custom congratulation messages — Randomized on solve
+- [ ] Case-insensitive flag matching option
+
+### Medium Priority
+- [ ] Multi-file challenge support
+- [ ] Flag aliases — Accept multiple correct answers
+- [ ] Challenge hints system
+- [ ] Seasons / leaderboard resets
+- [ ] Filter CTFs by difficulty/category
+
+### Low Priority (Exploration)
+- [ ] CTFd API integration — Import challenges
+- [ ] Copy-paste challenge functionality
+- [ ] Web dashboard with OAuth2
+- [ ] Screenshot/video sharing in solutions
+- [ ] Challenge difficulty prediction (AI)
+
+---
+
+## 🙏 Credits
+
+**Developer:** cosmo030  
+**Framework:** discord.py 2.7+  
+**Hosting:** Self-hosted on Raspberry Pi / VPS  
+**Community:** Beta testers and early adopters
+
+---
+
+## 📝 Release Notes
+
+### What's New in v1.0.0
+
+First public release! All features are production-ready:
+
+✅ CTF creation and management  
+✅ Leaderboard system with dual scoring modes  
+✅ First-blood bonuses and role management  
+✅ Event workspaces for tournaments  
+✅ Analytics and insights  
+✅ Admin audit logging  
+✅ Sandbox testing environment  
+✅ Multi-guild support  
+✅ Comprehensive documentation  
+
+### Migration from Beta
+
+If you were running CTFLab beta:
+- **No data migration needed** — Database schema is stable
+- **Existing challenges continue working** — No breaking changes
+- **New features available immediately** — Run bot with v1.0.0
+
+---
+
+## 💬 Feedback & Issues
+
+Found a bug or have a feature request?
+
+- **GitHub Issues:** [Report on GitHub](https://github.com/cosmo030/ctf/issues)
+- **Discord Support:** [Join support server](https://discord.gg/WG8DjC2Tfa)
+- **Feature Voting:** Vote on upcoming features in the Notion roadmap
+
+---
+
+## 🔐 Security & Privacy
+
+- **No data collection** — Bot stores only CTF data and solve records
+- **Guild isolation** — Data from one guild never leaks to another
+- **Parameterized queries** — Protected against SQL injection
+- **OAuth2 secure** — Standard Discord authentication
+- **No analytics tracking** — Privacy-first design
+
+---
+
+## Next Steps
+
+- **[Getting Started](/ctflab-docs/getting-started/installation/)** — Invite bot to your server
+- **[Features Overview](/ctflab-docs/)** — Explore all capabilities
+- **[Commands Reference](/ctflab-docs/commands/public/)** — Full slash command list

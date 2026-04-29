@@ -1,0 +1,261 @@
+---
+title: Event Workspaces
+description: Create managed CTF tournament spaces with dedicated channels and leaderboards
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Host time-limited CTF tournaments or themed competitions with fully-managed Discord workspaces. Each event gets its own channels, roles, and independent leaderboard.
+
+## What is an Event?
+
+An **event** is a self-contained CTF competition space within your guild:
+
+- **Dedicated category** with organized channels
+- **Automatic role** for event participants
+- **Independent leaderboard** separate from guild-wide rankings
+- **Join/leave panel** for easy participation management
+- **Custom channel presets** (Team CTF, Educational, Minimal)
+
+Perfect for:
+- Weekend tournaments
+- Seasonal competitions
+- Educational CTF courses
+- Themed events (Crypto Month, Web Challenges, etc.)
+
+---
+
+## Creating an Event
+
+Use `/setup [event_name]` to launch the interactive wizard:
+
+### Step 1: Event Name
+
+Enter a memorable name:
+```
+/setup "Spring Tournament 2026"
+/setup "Crypto Week Challenge"
+/setup "Team CTF Finale"
+```
+
+### Step 2: Choose Preset
+
+Select a channel template:
+
+**🏆 Team CTF Preset** (Most comprehensive)
+- `challenges-forum` — organized challenge threads
+- `leaderboard` — real-time scoreboard
+- `general` — announcements and chat
+- `credentials` — shared resources
+- `notes` — collaborative notes
+- `solves` — solution showcase
+- `voice` — team coordination
+- Custom topic channels (optional)
+
+**📚 Educational Preset** (Streamlined for learning)
+- `challenges-forum`
+- `leaderboard`
+- `general`
+
+**⚡ Minimal Preset** (Lightweight)
+- `challenges-forum`
+- `leaderboard`
+
+### Step 3: Custom Channels (Optional)
+
+Add topic-specific channels:
+```
+Web Challenges
+Crypto Hints
+Reversing Tools
+Steganography
+```
+
+### Step 4: Activate
+
+Bot creates:
+- Discord category with your event name
+- All preset channels with proper permissions
+- Event role for members
+- Join/leave panel in `general`
+
+---
+
+## Event Leaderboard
+
+Each event has its own independent leaderboard:
+
+- **Shows only challenges created in that event**
+- **Unaffected by guild-wide solves**
+- **Uses same scoring mode** as your guild (solve-count or points)
+- **Includes first-blood bonuses** if enabled
+- **Auto-updates in real-time**
+
+Example:
+```
+Event: Spring Tournament
+Leaderboard Type: Points-Based
+
+🥇 @Alice — 2150 pts (6 challenges solved)
+🥈 @Bob — 1850 pts (5 challenges solved)
+🥉 @Charlie — 1250 pts (4 challenges solved)
+```
+
+---
+
+## Role-Based Access
+
+<CardGrid>
+	<Card title="Automatic Role Assignment">
+		Members who click "Join" get the event role. Leaving removes it.
+	</Card>
+	<Card title="Channel Permissions">
+		Event channels are only visible to members with the event role. Guild members without the role can't see anything.
+	</Card>
+	<Card title="Easy Exit">
+		Members can leave anytime with the "Leave" button in the join panel. Role is removed and channels disappear.
+	</Card>
+</CardGrid>
+
+---
+
+## Creating Challenges in Events
+
+Challenges must be created **inside the event category** to be scoped to that event:
+
+1. Go to event category (e.g., "Spring Tournament")
+2. Run `/create-ctf` in any event channel
+3. Use the builder as normal
+4. Publish to an event channel
+5. Challenge appears on **event leaderboard only**
+
+**Note:** If you create a challenge in the guild-wide channel (not in event category), it won't be part of the event.
+
+---
+
+## Event Workflow Example
+
+**Scenario:** Hosting a weekend speed run tournament
+
+**Friday Morning:**
+```
+/setup "Weekend Speed Run 2026"
+→ Choose: Team CTF preset
+→ Bot creates category + channels + role
+→ Admins add challenges throughout the day
+```
+
+**Friday Evening:**
+```
+Members see: "Weekend Speed Run 2026" category
+Click: "Join Event" button
+Get: Event role + access to all channels
+Leaderboard: Only challenges from this event
+```
+
+**Saturday & Sunday:**
+```
+Members solve challenges
+Leaderboard updates in real-time
+Only solves in this event count
+Guild-wide leaderboard unaffected
+```
+
+**Sunday Evening (Event Ends):**
+```
+/event-purge "Weekend Speed Run 2026"
+→ Category deleted
+→ All channels deleted
+→ Event role deleted
+→ Solves preserved in history (optional archiving)
+```
+
+---
+
+## Deleting an Event
+
+Use `/event-purge [event_name]` to completely remove an event:
+
+**What gets deleted:**
+- ✓ Discord category
+- ✓ All channels
+- ✓ Event role
+- ✓ Database records (challenges + leaderboard for this event)
+
+**What's preserved:**
+- ✓ Member solve history (if you want to archive separately)
+- ✓ Guild-wide leaderboard (event solves are separate)
+
+<Aside type="warning">
+Purging is **irreversible**. Make sure to announce it to your community and give them time to download any important information from the event channels.
+</Aside>
+
+---
+
+## Points Integration
+
+If your guild has **points mode** enabled:
+
+- Event leaderboard uses the same points configuration
+- Challenges in events earn points based on difficulty
+- First-blood bonuses apply within the event
+- Top 3 roles (if enabled) apply to event leaderboard separately
+
+---
+
+## Best Practices
+
+<Card title="Announce Early">
+Tell members the event dates, rules, and preset when creating. Post in guild-wide announcements.
+</Card>
+
+<Card title="Use Team CTF Preset">
+For most tournaments, use Team CTF preset. Voice channels support team coordination. Smaller events can use Minimal.
+</Card>
+
+<Card title="Create Challenges Beforehand">
+Prepare all event challenges in advance and schedule their release. Don't create on-the-fly.
+</Card>
+
+<Card title="Archive Important Info">
+Before purging, take screenshots or notes of final leaderboards and winners for your records.
+</Card>
+
+<Card title="Celebrate Winners">
+After event ends, announce top 3 in guild-wide channel. Consider special roles or prizes.
+</Card>
+
+---
+
+## Event vs. Guild-Wide
+
+| Feature | Guild-Wide | Event |
+|---------|-----------|-------|
+| Leaderboard | Persistent | Time-limited |
+| Visibility | All members | Role-gated |
+| Channels | Permanent | Deleted with event |
+| Scoring | Always active | Independent |
+| First-Blood | Applies | Separate tracking |
+
+---
+
+## Advanced: Multiple Concurrent Events
+
+You can run **multiple events simultaneously** in the same guild:
+
+```
+Category: Winter Tournament
+Category: Educational Course
+Category: Monthly Speed Run
+
+All with separate leaderboards + roles
+Members can join any/all of them
+```
+
+---
+
+## Next Steps
+
+- **[Commands Reference](/ctflab-docs/commands/events/)** — Full `/setup` and `/event-purge` guide
+- **[Leaderboard System](/ctflab-docs/features/leaderboard/)** — Understanding scoring
+- **[CTF Builder](/ctflab-docs/features/ctf-builder/)** — Creating challenges for events

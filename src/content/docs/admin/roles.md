@@ -1,0 +1,279 @@
+---
+title: Role Management
+description: Automatic role assignment for solvers and top performers
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Automatically assign Discord roles to reward solver achievement and recognize top performers.
+
+## Solver Roles
+
+Assign a unique role to everyone who solves a specific challenge.
+
+### Enable Challenge Solver Roles
+
+```
+/enable-ctf-roles
+→ Solver roles feature activated
+→ Each new CTF can have a role assigned
+```
+
+### Disable Challenge Solver Roles
+
+```
+/disable-ctf-roles
+→ Solver roles feature deactivated
+→ Existing roles remain; new solves don't award roles
+```
+
+---
+
+## How Solver Roles Work
+
+When enabled, during CTF creation:
+
+1. **Choose difficulty** → select category → select input type
+2. **Create modal** opens
+3. **New field:** "Solver Role" (optional dropdown)
+4. Select or create a role (e.g., @Web Solvers, @Crypto Masters)
+5. Publish challenge
+
+**On first solve:**
+- Member solves the challenge
+- Role is automatically awarded
+- Member added to solver community
+- Announcement in success channel includes role mention
+
+**Example:**
+```
+/create-ctf
+→ Title: Web Exploitation
+→ Difficulty: Hard
+→ Solver Role: @Web Solvers
+→ Publish
+
+User Alice solves → gets @Web Solvers role
+```
+
+---
+
+## Top 3 Leaderboard Roles
+
+Award ranks 🥇 🥈 🥉 with custom Discord roles.
+
+### Enable Top-3 Roles
+
+```
+/enable-top-3
+```
+
+**Interactive setup (2 steps):**
+
+**Step 1: Role Selection**
+- Confirm or create 1st place role (e.g., @Leaderboard Champion)
+- Confirm or create 2nd place role (e.g., @Runner-Up)
+- Confirm or create 3rd place role (e.g., @Third Place)
+
+**Step 2: Customization (Optional)**
+- Set custom display names (e.g., "🏆 Champion")
+- Set custom colors (e.g., gold #FFD700, silver #C0C0C0, bronze #CD7F32)
+
+---
+
+### How Top-3 Works
+
+**Real-time sync:**
+- After each leaderboard update, roles are re-assigned
+- Top 3 solvers get roles automatically
+- Displaced members lose roles
+
+**Example scenario:**
+
+```
+Monday: Alice (12 solves) → 🥇
+        Bob (10 solves) → 🥈
+        Charlie (9 solves) → 🥉
+
+Tuesday: Alice solves Challenge 5
+         New ranking: Alice (13), David (12), Bob (10)
+         
+         David gets 🥇, Alice keeps 🥇? No:
+         Alice: 13 solves → 🥇 (1st)
+         David: 12 solves → 🥈 (2nd, was unranked)
+         Bob: 10 solves → 🥉 (3rd, was 2nd)
+         Charlie: 9 solves → (no role, falls out of top 3)
+```
+
+**Role assignment:**
+- Roles are added to users who rank
+- Roles are removed from users who fall out
+
+**Instant feedback:**
+- Members see their rank change in real-time
+- Decorative role appears in member list immediately
+
+---
+
+### Disable Top-3 Roles
+
+```
+/disable-top-3
+→ Top-3 roles disabled
+→ Existing roles removed from all members
+```
+
+---
+
+## Custom Role Configuration
+
+### Top-3 Display Names
+
+You can customize how top 3 roles appear:
+
+**Default names:**
+- 1st Place
+- 2nd Place
+- 3rd Place
+
+**Custom names (examples):**
+- 🏆 Elite
+- 🥈 Challenger
+- 🎖️ Honored
+
+<Aside type="info">
+Role display names (the @role mention name) are separate from the role's guild display. You can set:
+- **Role name** (in Discord role settings): "1st Place"
+- **Custom display** (in CTFLab setup): "🏆 Elite" (decorative, for leaderboard embeds)
+
+The actual @role mention stays as "1st Place".
+</Aside>
+
+### Top-3 Colors
+
+Set attractive colors for each rank:
+
+**Color picker (hex):**
+- 1st: #FFD700 (gold)
+- 2nd: #C0C0C0 (silver)
+- 3rd: #CD7F32 (bronze)
+
+Members see these colors in the member list and role sidebar.
+
+---
+
+## Solver Role Permissions
+
+<Aside type="warning">
+Solver roles don't grant permissions by default. They're purely cosmetic (for identification).
+
+If you want solver roles to grant channel access:
+1. Create role with desired permissions
+2. Set it as solver role via `/enable-ctf-roles` during CTF creation
+3. Manually configure channel permissions for that role
+</Aside>
+
+**Common setup:**
+```
+Role: @Web Solvers
+Permissions:
+- Read #web-writeups channel
+- Read #web-resources channel
+- Post in #solutions (optional)
+```
+
+---
+
+## Role Lifecycle
+
+### Solver Roles
+
+| Event | Action |
+|-------|--------|
+| CTF published with solver role | Role created (if new) |
+| Member solves | Role awarded |
+| Member solves again | (no change, already has role) |
+| CTF deleted | Role remains (can be reused for future challenges) |
+| Member banned | (depends on ban implementation) |
+
+### Top-3 Roles
+
+| Event | Action |
+|-------|--------|
+| `/enable-top-3` enabled | Roles created, assigned to current top 3 |
+| User solves and moves up | Roles re-synced |
+| User solves and stays in top 3 | (no change) |
+| User leaves top 3 | Role removed |
+| `/disable-top-3` disabled | Roles removed from all members |
+
+---
+
+## Best Practices
+
+<Card title="Clear Naming Convention">
+Use descriptive role names so members understand what they represent:
+- Solver roles: `@Web Solvers`, `@Crypto Experts`, `@Pwn Masters`
+- Top roles: `🥇 Rank 1`, `🥈 Rank 2`, `🥉 Rank 3`
+</Card>
+
+<Card title="Avoid Permission Overload">
+Don't grant solver roles channel permissions unless necessary. Keep them cosmetic for member recognition.
+</Card>
+
+<Card title="Use Colors Strategically">
+Colors help members quickly identify top performers and category specialists. Match your server's theme.
+</Card>
+
+<Card title="Test Top-3 Before Launch">
+Enable top-3 roles, create a test challenge, solve it, and verify roles are assigned correctly.
+</Card>
+
+<Card title="Communicate Changes">
+When you enable/disable top-3 or solver roles, announce it in a guild channel so members understand the new system.
+</Card>
+
+---
+
+## Troubleshooting
+
+**Q: Solver role isn't being assigned**
+A: Make sure you selected a role during CTF creation. Verify the bot has permission to assign roles.
+
+**Q: Top-3 roles don't update when leaderboard changes**
+A: Check that top-3 is enabled (`/enable-top-3` already run). Bot must have `manage_roles` permission.
+
+**Q: Member doesn't see their new role**
+A: Roles might not be visible in member list. Check role visibility settings in Discord role editor (toggle "Display role separately").
+
+**Q: I accidentally deleted a solver role**
+A: If you delete a role, the next time someone solves that challenge, a new role will be created automatically.
+
+---
+
+## Integration with Other Features
+
+### With Leaderboard
+
+- **Solve-count mode:** Top 3 based on total solves
+- **Points mode:** Top 3 based on total points
+- **Both:** Roles sync after every leaderboard update
+
+### With First-Blood
+
+- First-blood bonuses increase points
+- Higher points = potentially better top-3 ranking
+- Top-3 roles reflect final calculated points
+
+### With Events
+
+- Event workspaces have separate leaderboards
+- Top-3 roles are **guild-wide only** (not event-specific)
+- Event solves count toward guild-wide top 3 ranking
+
+---
+
+## Next Steps
+
+- **[Leaderboard System](/ctflab-docs/features/leaderboard/)** — Understanding rankings
+- **[Server Configuration](/ctflab-docs/admin/configuration/)** — General guild setup
+- **[Audit Logs](/ctflab-docs/admin/audit-logs/)** — Monitoring role changes

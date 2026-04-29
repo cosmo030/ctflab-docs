@@ -1,0 +1,428 @@
+---
+title: FAQ
+description: Frequently asked questions and troubleshooting
+---
+
+import { Aside, Card } from '@astrojs/starlight/components';
+
+## General Questions
+
+### What is CTFLab?
+
+CTFLab is a **Discord bot for creating and running Capture The Flag (CTF) competitions**. It's entirely Discord-native — no external website or dashboard needed. Create challenges, track solves, and maintain leaderboards all within Discord.
+
+### Do I need technical knowledge to use CTFLab?
+
+**No!** CTFLab is designed for community managers and educators. The interactive CTF builder walks you through challenge creation step-by-step. You don't need to know anything about databases or programming.
+
+**If you're creating challenges:** You need to know the flag (answer) and how to write clear instructions.
+
+### What kind of communities use CTFLab?
+
+- **Security groups** — Weekly CTF competitions
+- **Educational institutions** — Cybersecurity courses
+- **Companies** — Internal security training
+- **Casual communities** — Puzzle and logic challenges
+- **Themed events** — Seasonal tournaments
+
+---
+
+## Setup & Installation
+
+### How do I add CTFLab to my server?
+
+1. [Open the invite link](https://discord.com/oauth2/authorize?client_id=1446577483351588966&scope=bot+applications.commands&permissions=2147558464)
+2. Select your server
+3. Grant permissions
+4. Bot joins and initializes automatically
+
+**Required permissions:**
+- Manage Channels (for events)
+- Manage Roles (for top-3 roles)
+- Send Messages & Embeds
+- Slash Commands
+
+### What permissions does CTFLab need?
+
+| Permission | Used For |
+|---|---|
+| Send Messages | Challenge embeds, announcements |
+| Embed Links | Rich formatting for challenges |
+| Manage Roles | Top 3 + solver role assignment |
+| Manage Channels | Event workspace creation |
+| View Channels | Reading challenge submissions |
+| Add Reactions | UI buttons (optional) |
+
+<Aside type="tip">
+CTFLab requests minimal permissions. It never deletes messages, doesn't read message history, and can't ban users. It's designed to be trustworthy.
+</Aside>
+
+### Can I run CTFLab on multiple servers?
+
+**Yes!** CTFLab works with unlimited servers. Each guild has completely independent configuration, leaderboards, and data.
+
+---
+
+## Challenges & Scoring
+
+### How do I create a challenge?
+
+1. Run `/create-ctf` in any channel
+2. Use the interactive builder (difficulty → category → input type)
+3. Fill in the modal (title, guidance, flag, max attempts)
+4. Preview (optional)
+5. Publish
+
+The bot posts an embed with a "Submit Flag" button.
+
+### Can I upload a file as the challenge?
+
+**Yes!** During CTF creation, choose "File" as the input type. Members can download your file by clicking the embed link.
+
+**Common file types:**
+- `.zip` — Compressed challenge archives
+- `.elf` / `.exe` — Binaries for reversing
+- `.pcap` — Network captures
+- `.txt` — Hint files or encrypted content
+
+### What happens if someone enters the wrong flag?
+
+- ❌ Attempt counted against max attempts
+- ❌ User notified: "Incorrect flag"
+- ⚠️ If max attempts reached: "You've used all attempts"
+
+Wrong attempts **don't appear on leaderboards**.
+
+### Can I change the flag after publishing?
+
+**Yes!** Use `/edit-ctf [id]` to:
+- Change flag
+- Update guidance
+- Adjust difficulty
+- Change max attempts
+
+Existing solves are preserved. New attempts use the updated flag.
+
+### How do first-blood bonuses work?
+
+When enabled, the **1st, 2nd, and 3rd solvers** get point multipliers:
+- 1st Blood: +50% points (default)
+- 2nd Blood: +30% points
+- 3rd Blood: +15% points
+
+**Example:**
+```
+Challenge: Hard (400 base points)
+
+1st Solver: 400 × 1.50 = 600 pts
+2nd Solver: 400 × 1.30 = 520 pts
+3rd Solver: 400 × 1.15 = 460 pts
+4th+ Solvers: 400 pts (no bonus)
+```
+
+### Can I modify first-blood percentages?
+
+**Yes!** Run `/enable-first-blood` anytime to adjust percentages. New solves use the updated values.
+
+### What if I delete a challenge?
+
+- ❌ Challenge embed removed
+- ❌ Challenge deleted from database
+- ✓ Solve history is preserved (users keep leaderboard rank)
+
+Use **archiving** instead of deletion to keep history: use `/ctf-manage [id]` and choose "Archive".
+
+---
+
+## Leaderboards & Roles
+
+### Solve-Count vs. Points Mode — Which should I use?
+
+| Mode | Best For |
+|---|---|
+| **Solve-Count** | Casual communities, beginners, skill-building |
+| **Points** | Competitive events, balanced difficulty, tournaments |
+
+**Default:** Solve-count. **To enable points:** Run `/ctf-config-points`.
+
+### How do leaderboards update?
+
+**Automatically!** After someone solves a challenge:
+1. Flag is validated
+2. Leaderboard refreshes (5-second debounce)
+3. Top 3 roles updated (if enabled)
+4. Success announcement posted
+
+**No manual refresh needed.**
+
+### Can I remove someone from the leaderboard?
+
+**Yes!** Use `/ctf-leaderboard-remove [member]` to clear all their solves.
+
+**Warning:** This is permanent and irreversible.
+
+### Can I revoke a single solve?
+
+**Yes!** Use `/ctf-revoke-solve [member] [ctf_query]` to remove one specific solve while keeping others intact.
+
+### How do top-3 roles work?
+
+- `/enable-top-3` creates 3 roles (1st, 2nd, 3rd place)
+- Bot automatically assigns roles to current top 3 members
+- When rankings change, roles are reassigned
+- Displaced members lose roles automatically
+
+**Example:**
+```
+Monday: Alice #1, Bob #2, Charlie #3
+Tuesday: Alice solves another → still #1
+         David's score rises → David #2, Bob #3, Charlie falls out
+         
+New roles: Alice 🥇, David 🥈, Bob 🥉
+```
+
+---
+
+## Events & Tournaments
+
+### What's the difference between guild-wide and event leaderboards?
+
+| Feature | Guild-Wide | Event |
+|---|---|---|
+| Visibility | Public to guild | Role-gated |
+| Scope | All challenges | Only event challenges |
+| Duration | Permanent | Time-limited |
+| Deletion | Can be archived | Deleted with event |
+
+### How do I create an event?
+
+1. Run `/setup [event_name]`
+2. Choose preset (Team CTF, Educational, Minimal)
+3. (Optional) Add custom channels
+4. Bot creates category + channels + role
+
+Members join via "Join Event" button in the event channel.
+
+### Can I run multiple events at once?
+
+**Yes!** Each event is isolated. Members can join any/all events. Leaderboards are separate.
+
+### How do I delete an event?
+
+Run `/event-purge [event_name]` to remove the event workspace entirely (category, channels, role, leaderboard).
+
+<Aside type="warning">
+Event purge is **irreversible**. Archive challenge details before deleting.
+</Aside>
+
+---
+
+## Sandbox & Testing
+
+### What is the sandbox?
+
+A private testing channel that auto-deletes after 2 hours. Use it to create and test challenges before publishing to the guild.
+
+### How do I create a sandbox?
+
+Run `/start-sandbox` and the bot creates a private channel scoped to you.
+
+### How long does a sandbox last?
+
+**2 hours** from creation. After 2 hours, the channel auto-deletes. You can manually end it earlier with the "End Sandbox" button.
+
+### Do sandbox solves count on leaderboards?
+
+**No!** Sandbox challenges are completely isolated and don't appear on any leaderboards.
+
+---
+
+## Analytics & Stats
+
+### How do I view guild analytics?
+
+Run `/ctf-analytics` (admin-only) to see:
+- Overview (total CTFs, solves, unique solvers, etc.)
+- Hardest CTFs (top 5 by difficulty)
+- Top Solvers (leaderboard)
+
+### Can I view my personal stats?
+
+**Yes!** Run `/ctf-stats` (or `/ctf-stats [member]` for others). Shows:
+- Total solves and attempts
+- Accuracy percentage
+- First bloods
+- Points (if points mode enabled)
+- Difficulty breakdown
+
+---
+
+## Administration
+
+### Who can create challenges?
+
+By default: **Server admins** (manage_guild permission).
+
+To grant non-admins: Run `/allow-ctf [role]`.
+
+### Can creators solve their own challenges?
+
+By default: **Yes!**
+
+To disable: Run `/disable-creator-solves`.
+
+### How do I prevent cheating?
+
+**Built-in safeguards:**
+- Max attempts limit (prevents brute-force)
+- Answer logs (audit flag attempts)
+- Audit logs (track who made changes)
+
+**Community methods:**
+- Review answer logs for suspicious patterns
+- Revoke solves if cheating detected
+- Disable solver roles for suspicious solves
+
+### How do I set up channel configurations?
+
+- `/ctf-success-channel [channel]` — Solve announcements
+- `/ctf-answer-logs [channel]` — Flag submission logs
+- `/admin-logs [channel]` — Audit trail
+
+### What does the audit log show?
+
+Everything an admin does:
+- Challenge creation/editing/deletion
+- Configuration changes
+- Role assignments
+- Leaderboard updates
+- Event creation/deletion
+
+---
+
+## Data & Storage
+
+### Where is my data stored?
+
+**Locally** on the bot's hosting server in a SQLite database (`ctfbot.db`).
+
+- Not in the cloud
+- Not shared with third parties
+- Accessible only by the bot
+
+### Can I export my data?
+
+**Not yet.** Currently, all data is stored in SQLite. You can:
+- Screenshot leaderboards
+- Export analytics manually
+- Request a data export (in roadmap)
+
+### How do I back up my database?
+
+The bot's admin can run:
+```bash
+bash ctflab/backup_db.sh
+```
+
+This creates a timestamped backup of `ctfbot.db`.
+
+### Is my data private?
+
+**Yes!** All data is:
+- Stored locally
+- Guild-isolated (not visible across guilds)
+- Never sent to third parties
+- Compliant with Discord TOS
+
+---
+
+## Troubleshooting
+
+### Bot isn't responding to slash commands
+
+**Check:**
+1. Bot is in your server (check Members list)
+2. Bot has "Applications" intent enabled
+3. You have permission to use slash commands
+4. Try `/help` or any command
+
+**Fix:**
+- Kick and re-invite the bot
+- Check server permissions for bot role
+
+### Leaderboard isn't updating
+
+**Check:**
+1. Leaderboard message exists
+2. Bot has permission to edit the message
+3. At least one solve has occurred
+
+**Fix:**
+- Run `/ctf-leaderboard` to re-post leaderboard
+- Check channel permissions
+
+### Top-3 roles aren't assigning
+
+**Check:**
+1. Top-3 enabled: `/enable-top-3`
+2. Bot has "Manage Roles" permission
+3. At least 3 members have solved a challenge
+
+**Fix:**
+- Disable and re-enable: `/disable-top-3` then `/enable-top-3`
+- Check bot role hierarchy (must be above top-3 roles)
+
+### Audit log isn't showing events
+
+**Check:**
+1. Audit log channel exists
+2. Bot has permission to send messages
+3. At least one admin action has occurred
+
+**Fix:**
+- Re-run `/admin-logs [channel]`
+- Check channel permissions
+
+---
+
+## Feature Requests & Bugs
+
+### How do I request a feature?
+
+1. [GitHub Issues](https://github.com/cosmo030/ctf/issues) — Feature requests
+2. [Discord Support Server](https://discord.gg/WG8DjC2Tfa) — Discuss with community
+
+### How do I report a bug?
+
+- **GitHub Issues** (preferred): Include steps to reproduce
+- **Discord Support Server:** Describe the issue and provide screenshots
+
+### What's the roadmap?
+
+See the [Changelog](/ctflab-docs/resources/changelog/) for planned features and current status.
+
+---
+
+## Billing & Licensing
+
+### Is CTFLab free?
+
+**Yes!** CTFLab is completely free and open-source. No subscription or payment required.
+
+### Do I need to host it myself?
+
+**No!** The public bot is hosted by the developer. Invite and use immediately.
+
+If you want to self-host, the source code is available on GitHub.
+
+---
+
+## Getting Help
+
+**Can't find your answer?**
+
+1. Check the [full documentation](/ctflab-docs/)
+2. [Join the Discord support server](https://discord.gg/WG8DjC2Tfa)
+3. [Open a GitHub issue](https://github.com/cosmo030/ctf/issues)
+
+We're here to help! 🎉

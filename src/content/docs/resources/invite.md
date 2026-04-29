@@ -9,7 +9,7 @@ import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
 
 Click the button below to invite CTFLab with all necessary permissions:
 
-**[ADD TO SERVER](https://discord.com/oauth2/authorize?client_id=YOUR_BOT_ID&scope=bot+applications.commands&permissions=permissions_number)**
+**[ADD TO SERVER](https://discord.com/oauth2/authorize?client_id=1446577483351588966&scope=bot+applications.commands&permissions=2147558464)**
 
 Required permissions:
 - Manage Channels (for event workspaces)
@@ -25,7 +25,7 @@ Required permissions:
 <CardGrid>
 	<Card title="Discord Support Server" icon="setting">
 		Join our community server for help, feedback, and announcements.
-		[Support Server](https://discord.gg/YOUR_SUPPORT_SERVER)
+		[Support Server](https://discord.gg/WG8DjC2Tfa)
 	</Card>
 	<Card title="GitHub Repository" icon="github">
 		View the source code and report issues.
@@ -33,7 +33,7 @@ Required permissions:
 	</Card>
 	<Card title="Top.gg Listing" icon="star">
 		Vote for CTFLab and see reviews from other users.
-		[Vote on Top.gg](https://top.gg/bot/YOUR_BOT_ID)
+		[Vote on Top.gg](https://top.gg/bot/1446577483351588966)
 	</Card>
 </CardGrid>
 

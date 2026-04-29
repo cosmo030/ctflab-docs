@@ -1,0 +1,343 @@
+---
+title: Server Configuration
+description: Initial setup and core guild settings
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Configure CTFLab for your Discord server with essential settings like success channels, audit logs, and difficulty levels.
+
+## Initial Setup
+
+When CTFLab joins your server for the first time:
+
+1. ✓ Database initializes automatically
+2. ✓ Default configuration created
+3. ✓ Ready to create challenges
+
+**No manual setup required** — start with `/create-ctf` immediately if you want!
+
+---
+
+## Core Configuration Commands
+
+### Success Channel
+
+Designate where solve announcements appear:
+
+```
+/ctf-success-channel [channel]
+```
+
+When a member solves a challenge, this channel receives:
+- Member name
+- Challenge title and ID
+- Difficulty badge
+- Attempt count
+- First-blood status (if applicable)
+
+**Example announcement:**
+```
+@Alice solved Web Exploitation (ID 1) in 2/10 attempts!
+[First Blood] 🎉
+```
+
+**Best practice:** Create a dedicated `#ctf-wins` or `#solutions` channel.
+
+---
+
+### Answer Logs (Optional)
+
+Log all flag submission attempts (correct and incorrect):
+
+```
+/ctf-answer-logs [channel]
+```
+
+**What gets logged:**
+- Timestamp of attempt
+- Member name
+- Challenge ID
+- Flag submitted (masked or visible based on config)
+- Result (✓ correct / ✗ incorrect)
+
+**Use cases:**
+- Detect potential cheating patterns
+- Audit challenge difficulty
+- Identify common wrong answers
+- Review attempt behavior
+
+**Best practice:** Make this channel admin-only or private.
+
+---
+
+### Admin Audit Logs
+
+Full administrative audit trail for all CTF management:
+
+```
+/admin-logs [channel]
+```
+
+Logs **every** action:
+- Challenge creation / edits / deletions
+- Configuration changes (difficulty, points, roles)
+- Top-3 role changes
+- First-blood configuration
+- Leaderboard updates
+- Event creation / deletion
+- Manual solve awards
+- Solve revocations
+
+**Color-coded by action type:**
+
+| Color | Meaning | Example |
+|-------|---------|---------|
+| 🟢 Green | Creation | New CTF posted |
+| 🟡 Yellow | Configuration | Points adjusted |
+| 🟠 Orange | Edits | Challenge guidance updated |
+| 🔴 Red | Destructive | Challenge deleted |
+| 🔵 Blue | Archives | Challenge closed |
+
+**Best practice:** Make this channel admin-only. Pin important entries.
+
+---
+
+## Difficulty Configuration
+
+### Default Levels
+
+CTFLab comes with built-in difficulty levels:
+- Easy
+- Medium
+- Hard
+- Insane
+
+### Custom Difficulty Labels
+
+Create guild-specific labels:
+
+```
+/ctf-config-difficulty
+```
+
+**Interactive setup:**
+1. Modal opens with 4 input fields
+2. Enter custom names (e.g., "Beginner", "Intermediate", "Advanced", "Expert")
+3. Save
+4. All future challenges use your custom labels
+
+**Example:**
+```
+Default:     Easy → Medium → Hard → Insane
+Your Guild:  101  → 201   → 301  → 401
+```
+
+**Use in CTF builder:**
+```
+/create-ctf
+→ Choose difficulty: 101 (was Easy), 201, 301, 401
+```
+
+---
+
+## Points Configuration
+
+Enable competitive scoring based on challenge difficulty:
+
+```
+/ctf-config-points
+```
+
+**Interactive setup:**
+1. Modal opens with 4 point input fields
+2. Enter points for each difficulty (e.g., Easy=100, Hard=400)
+3. Save
+4. Leaderboard switches to points mode automatically
+
+**Example Configuration:**
+```
+Easy:    100 pts
+Medium:  250 pts
+Hard:    400 pts
+Insane:  600 pts
+```
+
+**Automatic calculation:**
+When a member solves a challenge, they earn the points for that difficulty × first-blood multiplier (if enabled).
+
+**See also:** [Leaderboard System](/ctflab-docs/features/leaderboard/) for scoring details.
+
+---
+
+## Role Management
+
+### CTF Creator Role
+
+Allow non-admin members to create challenges:
+
+```
+/allow-ctf [role]
+```
+
+After setup, members with that role can run `/create-ctf`.
+
+**Example:**
+```
+/allow-ctf @CTF Creators
+→ Members with @CTF Creators role can now create challenges
+→ Still need manage_guild permission for editing/deleting
+```
+
+**Revoke creator role:**
+```
+/allow-ctf-clear
+→ Removes the CTF creator role
+→ Only admins can create CTFs again
+```
+
+---
+
+### Creator Self-Solve
+
+Control whether CTF creators can solve their own challenges:
+
+```
+/enable-creator-solves
+→ Creators CAN solve their own challenges
+
+/disable-creator-solves
+→ Creators CANNOT solve their own challenges (silent block on attempt)
+```
+
+**Best practice for events:** Disable this during tournaments to prevent bias.
+
+---
+
+## Channel Organization
+
+### Recommended Setup
+
+Create a dedicated category for CTFs:
+
+```
+📁 CTF Challenges
+├── 🔥 ctf-wins (Success announcements)
+├── 💬 ctf-general (Discussion)
+├── 🏆 leaderboard (Leaderboard embeds)
+├── 📋 audit-logs (Admin actions, private)
+└── 🚨 submission-logs (Flag attempts, private)
+```
+
+**Permissions:**
+- `#ctf-wins`, `#leaderboard`, `#ctf-general` — Public read-only
+- `#audit-logs`, `#submission-logs` — Admin-only
+
+---
+
+## Verification & Testing
+
+### Verify Configuration
+
+Check what's currently configured:
+
+```
+/ctf-config-points
+→ Shows current point values
+
+/ctf-config-difficulty
+→ Shows current difficulty labels
+
+/ctf-success-channel [channel]
+→ Re-run to change destination
+```
+
+### Test Your Setup
+
+1. **Create a test challenge:**
+   ```
+   /create-ctf → Title: "Test Challenge", Difficulty: Easy, Flag: "flag{test}"
+   ```
+
+2. **Submit the flag:**
+   - Click "Submit Flag"
+   - Type: `flag{test}`
+   - Verify success announcement appears in success channel
+
+3. **Check audit log:**
+   - Verify challenge creation logged in audit channel
+
+4. **View leaderboard:**
+   - Run `/ctf-leaderboard` to post leaderboard
+   - Your name should appear with 1 solve
+
+---
+
+## Multi-Guild Scoping
+
+<Aside type="info">
+Each guild has **completely independent configuration**:
+
+- Guild A: Easy=100, Medium=300, Hard=600
+- Guild B: Easy=50, Medium=150, Hard=300
+
+Changes in Guild A don't affect Guild B. Each guild's settings are isolated in the database.
+
+This means CTFLab supports:
+- Casual communities (low point values)
+- Competitive leagues (high point values)
+- Educational settings (custom difficulty names)
+- All simultaneously on the same bot instance
+</Aside>
+
+---
+
+## Best Practices
+
+<Card title="Set Up Channels First">
+Create your channel structure before publishing challenges. Use `/ctf-success-channel` once you know where solves should announce.
+</Card>
+
+<Card title="Enable Audit Logs">
+Even for small servers, enable audit logs. It helps troubleshoot issues and provides accountability.
+</Card>
+
+<Card title="Customize Difficulty Names">
+If your community has a theme (e.g., CTF101 course), customize difficulty labels to match your curriculum.
+</Card>
+
+<Card title="Test Configuration">
+Create a test challenge and verify success announcements appear in the right channel before inviting your community.
+</Card>
+
+<Card title="Document Your Rules">
+Post a pinned message in `#ctf-general` explaining:
+- How scoring works (points or solve-count)
+- CTF schedule and how to join events
+- What happens if you submit too many wrong flags
+- Rules about sharing solutions
+</Card>
+
+---
+
+## Troubleshooting
+
+**Q: Where are solve announcements going?**
+A: Run `/ctf-success-channel` without arguments to verify the configured channel. Bot must have permission to send messages there.
+
+**Q: Changes to points didn't apply to existing solves**
+A: Points configuration only affects **new solves**. Existing solves use their original point values.
+
+**Q: Creator role doesn't seem to work**
+A: Verify the role exists and is assigned to the member. Use `/allow-ctf [role]` again to re-apply.
+
+**Q: Audit log isn't showing events**
+A: Make sure the audit log channel exists and the bot has permission to send messages there.
+
+---
+
+## Next Steps
+
+- **[Roles & Permissions](/ctflab-docs/admin/roles/)** — Top-3 roles and solver roles
+- **[Audit Logs](/ctflab-docs/admin/audit-logs/)** — Detailed audit logging dashboard
+- **[CTF Builder](/ctflab-docs/features/ctf-builder/)** — Creating challenges

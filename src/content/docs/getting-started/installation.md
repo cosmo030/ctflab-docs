@@ -13,7 +13,7 @@ import { Steps, Card, CardGrid } from '@astrojs/starlight/components';
    
    Click the button below to invite CTFLab with the required permissions:
    
-   **[Add to Server](https://discord.com/oauth2/authorize?client_id=YOUR_BOT_ID&scope=bot+applications.commands&permissions=permissions_number)**
+    **[Add to Server](https://discord.com/oauth2/authorize?client_id=1446577483351588966&scope=bot+applications.commands&permissions=2147558464)**
    
    CTFLab requires these permissions:
    - `Manage Channels` — Create event workspaces
